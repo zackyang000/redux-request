@@ -1,0 +1,22 @@
+{
+  "name": "redux-async-middleware",
+  "version": "0.1.0",
+  "description": "Best way to handling async actions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TossShinHwa/redux-async-middleware.git"
+  },
+  "author": "Zack Yang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TossShinHwa/redux-async-middleware/issues"
+  },
+  "homepage": "https://github.com/TossShinHwa/redux-async-middleware",
+  "dependencies": {
+    "superagent": "^1.4.0"
+  }
+}
