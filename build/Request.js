@@ -45,7 +45,7 @@ var Request = (function () {
   _createClass(Request, [{
     key: 'formatUrl',
     value: function formatUrl(path, apiRoot) {
-      if (hasProtocol(path)) {
+      if (this.hasProtocol(path)) {
         return path;
       }
       return apiRoot + (path[0] !== '/' ? '/' + path : path);

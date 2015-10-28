@@ -18,7 +18,7 @@ var _request2 = _interopRequireDefault(_request);
 
 function requestMiddleware(_ref) {
   var apiRoot = _ref.apiRoot;
-  var handle = _ref.handle;
+  var successValid = _ref.successValid;
 
   var request = new _request2['default'](apiRoot);
 
@@ -44,8 +44,8 @@ function requestMiddleware(_ref) {
 
         next(_extends({}, params, { type: type, readyState: 'request' }));
         return promise(request).then(function (result) {
-          if (handle) {
-            var msg = handle(result);
+          if (successValid) {
+            var msg = successValid(result);
             if (msg === true) {
               next(_extends({}, params, { result: result, type: type, readyState: 'success' }));
             } else {
@@ -57,7 +57,7 @@ function requestMiddleware(_ref) {
         }, function (error) {
           next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
         })['catch'](function (error) {
-          console.error('redux-async-middleware Error: ', error);
+          console.error('redux-request-middleware Error: ', error);
           next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
         });
       };
