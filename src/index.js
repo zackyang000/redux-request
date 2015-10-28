@@ -19,7 +19,7 @@ export default function requestMiddleware({apiRoot, handle}) {
       next({...params, type, readyState: 'request'});
       return promise(request).then((result) => {
         if (handle) {
-          let msg = handle(result);
+          const msg = handle(result);
           if (msg === true) {
             next({...params, result, type, readyState: 'success'});
           } else {
@@ -35,5 +35,5 @@ export default function requestMiddleware({apiRoot, handle}) {
         next({...params, error, type, readyState: 'failure'});
       });
     };
-  }
+  };
 }

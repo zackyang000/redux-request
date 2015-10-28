@@ -29,12 +29,11 @@ export default class Request {
     if (hasProtocol(path)) {
       return path;
     }
-    path = path[0] !== '/' ? '/' + path : path;
-    return apiRoot + path;
+    return apiRoot + (path[0] !== '/' ? '/' + path : path);
   }
 
   hasProtocol(path) {
-    return apiRoot.indexOf('http://') === 0 || apiRoot.indexOf('https://') === 0
+    return path.indexOf('http://') === 0 || path.indexOf('https://') === 0;
   }
 }
 

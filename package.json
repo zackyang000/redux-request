@@ -1,22 +1,38 @@
 {
-  "name": "redux-request-middleware",
+  "name": "redux-request",
   "version": "0.1.0",
   "description": "Best way to handling async actions.",
   "main": "src/index.js",
+  "scripts": {
+    "test": "$(npm bin)/eslint src",
+    "build": "$(npm bin)/babel src --out-dir build"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TossShinHwa/redux-async-middleware.git"
+    "url": "https://github.com/TossShinHwa/redux-request.git"
   },
   "author": "Zack Yang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TossShinHwa/redux-async-middleware/issues"
+    "url": "https://github.com/TossShinHwa/redux-request/issues"
   },
-  "homepage": "https://github.com/TossShinHwa/redux-async-middleware",
+  "homepage": "https://github.com/TossShinHwa/redux-request",
   "peerDependencies": {
     "superagent": "^1.4.0"
   },
   "dependencies": {
     "superagent": "^1.4.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "babel-core": "^5.8.22",
+    "babel-eslint": "^4.0.5",
+    "babel-loader": "^5.3.2",
+    "eslint": "^1.1.0",
+    "eslint-config-airbnb": "0.0.7",
+    "eslint-plugin-react": "^3.2.1",
+    "gh-pages": "^0.3.1",
+    "rimraf": "^2.4.2",
+    "webpack": "^1.11.0"
   }
 }
