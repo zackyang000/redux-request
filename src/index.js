@@ -20,14 +20,11 @@ export default function requestMiddleware({apiRoot, successValid}) {
       return promise(request).then((result) => {
         if (successValid) {
           const msg = successValid(result);
-          if (msg === true) {
-            next({...params, result, type, readyState: 'success'});
-          } else {
-            next({...params, error: msg, type, readyState: 'failure'});
+          if (msg !== true) {
+            return next({...params, error: msg, type, readyState: 'failure'});
           }
-        } else {
-          next({...params, result, type, readyState: 'success'});
         }
+        return next({...params, result, type, readyState: 'success'});
       }, (error) => {
         next({...params, error, type, readyState: 'failure'});
       }).catch((error)=> {

@@ -46,14 +46,11 @@ function requestMiddleware(_ref) {
         return promise(request).then(function (result) {
           if (successValid) {
             var msg = successValid(result);
-            if (msg === true) {
-              next(_extends({}, params, { result: result, type: type, readyState: 'success' }));
-            } else {
-              next(_extends({}, params, { error: msg, type: type, readyState: 'failure' }));
+            if (msg !== true) {
+              return next(_extends({}, params, { error: msg, type: type, readyState: 'failure' }));
             }
-          } else {
-            next(_extends({}, params, { result: result, type: type, readyState: 'success' }));
           }
+          return next(_extends({}, params, { result: result, type: type, readyState: 'success' }));
         }, function (error) {
           next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
         })['catch'](function (error) {
