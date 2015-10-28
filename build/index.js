@@ -52,10 +52,10 @@ function requestMiddleware(_ref) {
           }
           return next(_extends({}, params, { result: result, type: type, readyState: 'success' }));
         }, function (error) {
-          next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
+          return next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
         })['catch'](function (error) {
           console.error('redux-request-middleware Error: ', error);
-          next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
+          return next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
         });
       };
     };

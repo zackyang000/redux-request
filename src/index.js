@@ -26,10 +26,10 @@ export default function requestMiddleware({apiRoot, successValid}) {
         }
         return next({...params, result, type, readyState: 'success'});
       }, (error) => {
-        next({...params, error, type, readyState: 'failure'});
+        return next({...params, error, type, readyState: 'failure'});
       }).catch((error)=> {
         console.error('redux-request-middleware Error: ', error);
-        next({...params, error, type, readyState: 'failure'});
+        return next({...params, error, type, readyState: 'failure'});
       });
     };
   };
