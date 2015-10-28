@@ -1,6 +1,6 @@
 import Request from './request';
 
-export default function requestMiddleware({apiRoot, handle}) {
+export default function requestMiddleware({apiRoot, successValid}) {
   const request = new Request(apiRoot);
 
   return ({dispatch, getState}) => {
@@ -18,8 +18,8 @@ export default function requestMiddleware({apiRoot, handle}) {
 
       next({...params, type, readyState: 'request'});
       return promise(request).then((result) => {
-        if (handle) {
-          const msg = handle(result);
+        if (successValid) {
+          const msg = successValid(result);
           if (msg === true) {
             next({...params, result, type, readyState: 'success'});
           } else {
@@ -31,7 +31,7 @@ export default function requestMiddleware({apiRoot, handle}) {
       }, (error) => {
         next({...params, error, type, readyState: 'failure'});
       }).catch((error)=> {
-        console.error('redux-async-middleware Error: ', error);
+        console.error('redux-request-middleware Error: ', error);
         next({...params, error, type, readyState: 'failure'});
       });
     };

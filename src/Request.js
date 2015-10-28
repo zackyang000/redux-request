@@ -26,7 +26,7 @@ export default class Request {
   }
 
   formatUrl(path, apiRoot) {
-    if (hasProtocol(path)) {
+    if (this.hasProtocol(path)) {
       return path;
     }
     return apiRoot + (path[0] !== '/' ? '/' + path : path);
