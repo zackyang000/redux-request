@@ -23,7 +23,7 @@ var Request = (function () {
     ['get', 'post', 'put', 'patch', 'del'].map(function (method) {
       _this[method] = function (path, options) {
         return new Promise(function (resolve, reject) {
-          var request = _superagent2['default'][method](_this.formatUrl(path, apiRoot));
+          var request = _superagent2['default'][method](_this.formatUrl(path, apiRoot)).withCredentials();
           if (options && options.query) {
             request.query(options.query);
           }
