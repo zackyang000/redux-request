@@ -1,11 +1,12 @@
 {
   "name": "redux-request",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Best way to handling async actions.",
   "main": "build/index.js",
   "scripts": {
     "test": "$(npm bin)/eslint src",
-    "build": "$(npm bin)/babel src --out-dir build"
+    "build": "$(npm bin)/babel src --out-dir build",
+    "prepublish": "make"
   },
   "repository": {
     "type": "git",
