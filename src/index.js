@@ -1,6 +1,6 @@
 import Request from './request';
 
-export default function requestMiddleware({apiRoot, successValid}) {
+export default function requestMiddleware(apiRoot) {
   const request = new Request(apiRoot);
 
   return ({dispatch, getState}) => {
@@ -18,12 +18,6 @@ export default function requestMiddleware({apiRoot, successValid}) {
 
       next({...params, type, readyState: 'request'});
       return promise(request).then((result) => {
-        if (successValid) {
-          const msg = successValid(result);
-          if (msg !== true) {
-            return next({...params, error: msg, type, readyState: 'failure'});
-          }
-        }
         return next({...params, result, type, readyState: 'success'});
       }, (error) => {
         return next({...params, error, type, readyState: 'failure'});
