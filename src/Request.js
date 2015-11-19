@@ -6,7 +6,7 @@ export default class Request {
       map((method) => {
         this[method] = (path, options) => {
           return new Promise((resolve, reject) => {
-            const request = superagent[method](this.formatUrl(path, apiRoot));
+            const request = superagent[method](this.formatUrl(path, apiRoot)).withCredentials();
             if (options && options.query) {
               request.query(options.query);
             }
