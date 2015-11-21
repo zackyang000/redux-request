@@ -1,5 +1,7 @@
 import Request from './request';
 
+const PREFIX = 'REQUEST';
+
 export default function requestMiddleware(apiRoot) {
   const request = new Request(apiRoot);
 
@@ -12,18 +14,17 @@ export default function requestMiddleware(apiRoot) {
       const { promise, type, ...params } = action;
 
       if (!promise) {
-        action.readyState = 'success';
         return next(action);
       }
 
-      next({...params, type, readyState: 'request'});
+      next({...params, type: `${PREFIX}${type}`});
       return promise(request).then((result) => {
-        return next({...params, result, type, readyState: 'success'});
+        return next({...params, result, type});
       }, (error) => {
-        return next({...params, error, type, readyState: 'failure'});
+        return next({...params, error, type});
       }).catch((error)=> {
         console.error('redux-request-middleware Error: ', error);
-        return next({...params, error, type, readyState: 'failure'});
+        return next({...params, error, type});
       });
     };
   };

@@ -16,15 +16,14 @@ var _request = require('./request');
 
 var _request2 = _interopRequireDefault(_request);
 
-function requestMiddleware(_ref) {
-  var apiRoot = _ref.apiRoot;
-  var successValid = _ref.successValid;
+var PREFIX = 'REQUEST';
 
+function requestMiddleware(apiRoot) {
   var request = new _request2['default'](apiRoot);
 
-  return function (_ref2) {
-    var dispatch = _ref2.dispatch;
-    var getState = _ref2.getState;
+  return function (_ref) {
+    var dispatch = _ref.dispatch;
+    var getState = _ref.getState;
 
     return function (next) {
       return function (action) {
@@ -38,24 +37,17 @@ function requestMiddleware(_ref) {
         var params = _objectWithoutProperties(action, ['promise', 'type']);
 
         if (!promise) {
-          action.readyState = 'success';
           return next(action);
         }
 
-        next(_extends({}, params, { type: type, readyState: 'request' }));
+        next(_extends({}, params, { type: '' + PREFIX + type }));
         return promise(request).then(function (result) {
-          if (successValid) {
-            var msg = successValid(result);
-            if (msg !== true) {
-              return next(_extends({}, params, { error: msg, type: type, readyState: 'failure' }));
-            }
-          }
-          return next(_extends({}, params, { result: result, type: type, readyState: 'success' }));
+          return next(_extends({}, params, { result: result, type: type }));
         }, function (error) {
-          return next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
+          return next(_extends({}, params, { error: error, type: type }));
         })['catch'](function (error) {
           console.error('redux-request-middleware Error: ', error);
-          return next(_extends({}, params, { error: error, type: type, readyState: 'failure' }));
+          return next(_extends({}, params, { error: error, type: type }));
         });
       };
     };
