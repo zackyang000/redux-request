@@ -16,7 +16,7 @@ var _request = require('./request');
 
 var _request2 = _interopRequireDefault(_request);
 
-var PREFIX = 'REQUEST';
+var PREFIX = '[REQUEST]';
 
 function requestMiddleware(apiRoot) {
   var request = new _request2['default'](apiRoot);

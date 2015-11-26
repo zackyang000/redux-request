@@ -1,6 +1,6 @@
 import Request from './request';
 
-const PREFIX = 'REQUEST';
+const PREFIX = '[REQUEST]';
 
 export default function requestMiddleware(apiRoot) {
   const request = new Request(apiRoot);
