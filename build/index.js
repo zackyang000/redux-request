@@ -12,14 +12,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-var _request = require('./request');
+var _Request = require('./Request');
 
-var _request2 = _interopRequireDefault(_request);
+var _Request2 = _interopRequireDefault(_Request);
 
 var PREFIX = '[REQUEST]';
 
 function requestMiddleware(apiRoot) {
-  var request = new _request2['default'](apiRoot);
+  var request = new _Request2['default'](apiRoot);
 
   return function (_ref) {
     var dispatch = _ref.dispatch;
