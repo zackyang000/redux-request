@@ -6,6 +6,20 @@ export default class Request {
       map((method) => {
         this[method] = (path, options) => {
           return new Promise((resolve, reject) => {
+            if (fetch) {
+              const config = {
+                credentials: 'include', 
+                method,
+              }
+              const url = new URL(this.formatUrl(path, apiRoot));
+              if (options && options.query) {
+                Object.keys(options.query).forEach(key => url.searchParams.append(key, options.query[key]))
+              }
+              if (options && options.data) {
+                config.body = JSON.stringify(options.data);
+              }
+              return fetch(url.toString(), config).then((res) => res.json()).then(resolve).catch(reject);
+            }
             const request = superagent[method](this.formatUrl(path, apiRoot)).withCredentials();
             if (options && options.query) {
               request.query(options.query);

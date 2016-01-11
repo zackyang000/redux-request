@@ -23,6 +23,30 @@ var Request = (function () {
     ['get', 'post', 'put', 'patch', 'del'].map(function (method) {
       _this[method] = function (path, options) {
         return new Promise(function (resolve, reject) {
+          if (fetch) {
+            var _ret = (function () {
+              var config = {
+                credentials: 'include',
+                method: method
+              };
+              var url = new URL(_this.formatUrl(path, apiRoot));
+              if (options && options.query) {
+                Object.keys(options.query).forEach(function (key) {
+                  return url.searchParams.append(key, options.query[key]);
+                });
+              }
+              if (options && options.data) {
+                config.body = JSON.stringify(options.data);
+              }
+              return {
+                v: fetch(url.toString(), config).then(function (res) {
+                  return res.json();
+                }).then(resolve)['catch'](reject)
+              };
+            })();
+
+            if (typeof _ret === 'object') return _ret.v;
+          }
           var request = _superagent2['default'][method](_this.formatUrl(path, apiRoot)).withCredentials();
           if (options && options.query) {
             request.query(options.query);
