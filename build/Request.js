@@ -24,28 +24,28 @@ var Request = (function () {
       _this[method] = function (path, options) {
         return new Promise(function (resolve, reject) {
           if (fetch) {
-            var _ret = (function () {
-              var config = {
-                credentials: 'include',
-                method: method
-              };
-              var url = new URL(_this.formatUrl(path, apiRoot));
-              if (options && options.query) {
+            var config = {
+              credentials: 'include',
+              method: method
+            };
+            var url = _this.formatUrl(path, apiRoot);
+            if (options && options.query) {
+              (function () {
+                // https://fetch.spec.whatwg.org/
+                // Object.keys(options.query).forEach(key => url.searchParams.append(key, options.query[key]))
+                var queryString = [];
                 Object.keys(options.query).forEach(function (key) {
-                  return url.searchParams.append(key, options.query[key]);
+                  queryString.push(key + '=' + options.query[key]);
                 });
-              }
-              if (options && options.data) {
-                config.body = JSON.stringify(options.data);
-              }
-              return {
-                v: fetch(url.toString(), config).then(function (res) {
-                  return res.json();
-                }).then(resolve)['catch'](reject)
-              };
-            })();
-
-            if (typeof _ret === 'object') return _ret.v;
+                url += '?' + queryString.join('&');
+              })();
+            }
+            if (options && options.data) {
+              config.body = JSON.stringify(options.data);
+            }
+            return fetch(url, config).then(function (res) {
+              return res.json();
+            }).then(resolve)['catch'](reject);
           }
           var request = _superagent2['default'][method](_this.formatUrl(path, apiRoot)).withCredentials();
           if (options && options.query) {

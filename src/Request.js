@@ -11,14 +11,20 @@ export default class Request {
                 credentials: 'include', 
                 method,
               }
-              const url = new URL(this.formatUrl(path, apiRoot));
+              let url = this.formatUrl(path, apiRoot);
               if (options && options.query) {
-                Object.keys(options.query).forEach(key => url.searchParams.append(key, options.query[key]))
+                // https://fetch.spec.whatwg.org/
+                // Object.keys(options.query).forEach(key => url.searchParams.append(key, options.query[key]))
+                const queryString = [];
+                Object.keys(options.query).forEach(key => {
+                  queryString.push(key + '=' + options.query[key]);
+                });
+                url += '?' + queryString.join('&');
               }
               if (options && options.data) {
                 config.body = JSON.stringify(options.data);
               }
-              return fetch(url.toString(), config).then((res) => res.json()).then(resolve).catch(reject);
+              return fetch(url, config).then((res) => res.json()).then(resolve).catch(reject);
             }
             const request = superagent[method](this.formatUrl(path, apiRoot)).withCredentials();
             if (options && options.query) {
