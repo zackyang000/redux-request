@@ -1,6 +1,6 @@
 {
   "name": "redux-request",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Best way to handling async actions.",
   "main": "build/index.js",
   "scripts": {
